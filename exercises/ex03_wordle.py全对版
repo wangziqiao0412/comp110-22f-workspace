@@ -1,0 +1,99 @@
+
+"""EX03 - Structured Wordle."""
+
+__author__ = "730614342"
+
+WHITE_BOX: str = "\U00002B1C"
+GREEN_BOX: str = "\U0001F7E9"
+YELLOW_BOX: str = "\U0001F7E8"
+
+SECRET_WORD: str = "codes"
+
+"""Part1 - contains_char"""
+
+
+def contains_char(target: str, single_char: str) -> bool:
+    """Return True if one char is founded in target string, Otherwise, Return False."""
+    assert len(single_char) == 1
+
+    idx = 0
+    while idx < len(target):
+        if single_char == target[idx]:
+            return True
+        else:
+            idx += 1
+
+    return False
+
+
+""" Part2 - emojified """
+
+
+def emojified(guess: str, secret: str) -> str:
+    """Find guess's characters in secret string, Return the appended string."""
+    assert len(guess) == len(secret)
+
+    i = 0
+    res: str = ""
+
+    while i < len(secret):
+        if guess[i] == secret[i]:  # the char is in secret's same position
+            res += GREEN_BOX
+        elif contains_char(secret, guess[i]):  # contains_char
+            res += YELLOW_BOX
+        else:  # otherwise
+            res += WHITE_BOX
+
+        i += 1
+
+    return res
+
+
+""" Part3 - input_guess """
+
+
+def input_guess(length: int) -> str:
+    """Given an integer expected length of a guess as a parameter, \
+    it will prompt the user for a guess and continue prompting them \
+    until they provide a guess of the expected length."""
+    guess: str = input(f"Enter a {length} character word: ")
+    while len(guess) != length:
+        guess = input(f"That wasn't {length} chars! Try again: ")
+
+    return guess
+
+
+""" Part4 - main """
+
+
+def main() -> None:
+    """The entrypoint of the program and main game loop."""
+    i = 1
+    state = "run"
+    num_turns = 6
+
+    # User still has turns left to play and has not yet won
+    while i <= num_turns and state != "won":
+        # Print the current turn number
+        print(f"=== Turn {i}/6 ===")
+        # Prompt the use relying on function input_guess
+        temp_guess = input_guess(len(SECRET_WORD))
+
+        # Print the resulting codified string by using function emojified
+        print(emojified(temp_guess, SECRET_WORD))
+
+        # If the user’s guess is the secret, the user has won!
+        if temp_guess == SECRET_WORD:
+            print(f"You won in {i}/6 turns!")
+            state = "won"
+        # Otherwise, move on to the next turn.
+        else:
+            i += 1
+
+    # If User run out of turns and has not yet won, print Sorry message
+    if state != "won":
+        print("X/6 - Sorry, try again tomorrow!")
+
+
+if __name__ == "__main__":
+    main()

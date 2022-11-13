@@ -1,0 +1,44 @@
+"""EX07 - Dictionary Functions."""
+__author__ = "730614342"
+
+
+def invert(input_dict:dict[str, str]) -> dict[str,str]:
+    output_dict = {}
+    for k, v in input_dict.items():
+        if v in list(output_dict.keys()):
+            raise KeyError()
+        output_dict[v] = k 
+    return output_dict
+
+
+def favorite_color(dict1:dict[str, str]) -> str:
+    values_store = []
+    for v in dict1.values():
+        values_store.append(v)
+    color_num = {}
+    for i in values_store:
+        if i not in list(color_num.keys()):
+            color_num[i] = 1
+        else:
+            color_num[i] += 1
+    values = list(color_num.values())
+    keys = list(color_num.keys())
+    index1 = values.index(max(values))
+    result = keys[index1]
+    return result
+
+
+def count(list1: list[str]) -> dict[str, int]:
+    dict1 = {}
+    for i in list1:
+        if i in list(dict1.keys()):
+            dict1[i] = 1
+        else:
+            dict1[i] += 1
+    return dict1
+
+
+
+
+
+

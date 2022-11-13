@@ -1,0 +1,10 @@
+def zip(KS: list[str], VS: list[str]) -> dict[str, str]:
+    """COnstruct dict from two lists."""
+    assert len(KS) == len(VS)
+    result: dict[str, str] = {}
+    for i in range(0, len(KS)):
+        result[KS[i]] = VS[i]
+    return result
+    #i: int = 0
+    #while i<len(KS):
+    #result[KS[i]]
